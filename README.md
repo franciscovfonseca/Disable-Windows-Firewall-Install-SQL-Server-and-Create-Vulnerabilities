@@ -26,7 +26,7 @@ The first step is to copy the **Public IP Address** of the ```windows-vm```
 ![azure portal](https://github.com/user-attachments/assets/59c10e90-33da-4cf3-a40c-802f76edf858)
 
 
-Using the **Microsoft Remote Desktop** 🡆 Remote into the VM using that IP Address and:
+Using the **Microsoft Remote Desktop** ➜ Remote into the VM using that IP Address and:
 
 - Username: ```labuser```
 - Password: ```Cyberlab123!```
@@ -41,15 +41,15 @@ Using the **Microsoft Remote Desktop** 🡆 Remote into the VM using that IP Add
 <summary> <h2>2️⃣ Turn off Windows Firewall</h2> </summary>
 <br>
 
-> By **Turnning off the Firewall**, the Virtual Machine is essentially going to respond to ping requests and all sorts of traffic 🡆 making it easier to be discovered on the internet by bad actors.
+> By **Turnning off the Firewall**, the Virtual Machine is essentially going to respond to ping requests and all sorts of traffic ➜ making it easier to be discovered on the internet by bad actors.
 > 
-> We have previously opened up the **NSG** (which in a sense is the **Azure Firewall**), but inside of the Operating System there's another **Firewall** 🡆 so we're going to disable that.
+> We have previously opened up the **NSG** (which in a sense is the **Azure Firewall**), but inside of the Operating System there's another **Firewall** ➜ so we're going to disable that.
 
 <br>
 
 Back in our Wondows Vm, the first thing to do is **Disable the Internal Windows Firewall**.
 
-Inside the Windows Firewall 🡆 click on **Windows Defender Firewall Properties**.
+Inside the Windows Firewall ➜ click on **Windows Defender Firewall Properties**.
 
 Then trun of the **Firewall State** for the **Domain**, **Private** and **Public Profiles**:
 
@@ -145,7 +145,7 @@ Open the **SSMS Setup ENU exe** File, install it and Restart the Vm:
 > 
 > Again this is just an App that let's us connect to our SQL Database.
 > 
-> Because our Virtual Machine is completely exposed to the Internet: The NSG is wide open & the local Firewall is wide open 🡆 theoretically anyone could attempt to connect to the SQL Database we just installed.
+> Because our Virtual Machine is completely exposed to the Internet: The NSG is wide open & the local Firewall is wide open ➜ theoretically anyone could attempt to connect to the SQL Database we just installed.
 > 
 > It doesn't have to be someone on the VM, it can be someone from anywhere worldwide, as long as they can access our VM's IP Address.
 > 
@@ -158,16 +158,145 @@ Open the **SSMS Setup ENU exe** File, install it and Restart the Vm:
 <h2></h2>
 <details close>
   
-<summary> <h2>5️⃣ Enable logging for SQL Server to be ported into Windows Event Viewer</h2> </summary>
+<summary> <h2>5️⃣ Enable Logging for SQL Server to be ported into Windows Event Viewer</h2> </summary>
 <br>
 
 > The next thing we're going to do is **Enable Logging for SQL Server**, in order to send the logs to the **Windows Event Log**.
 > 
-> This part is a bit troublesome to do 🡆 there's a few steps we have to do to **Enable Logging for SQL Server**.
+> This part is a bit troublesome to do ➜ there's a few steps we have to do to **Enable Logging for SQL Server**.
 
 <br>
 
 You can **[Follow this Link to Write SQL Server Audit Events to the Security log](https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/write-sql-server-audit-events-to-the-security-log?view=sql-server-ver16)**
+
+<br>
+
+  <details close> 
+  
+**<summary> 📝 Summary</summary>**
+
+We can view all the logs for the Windows VM through the **Event Viewer**.
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+For example if we go to Windows **Logs** > **Security** > click on one of the **Events / Logs** ➜ we can se the details: ***"An account was successfully logged on."***
+
+Whenever someone fails a login, or has a succesful login ➜ that's going to be recorded in the **Event Viewer** and we can see it:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+<br>
+
+> Basically what we're doing right now is set up the **SQL Server** ➜ so that when somebody **Fails to Authenticate** against it, we'll be able to see the logs for that in the **Event Viewer**
+> 
+> And to achieve that we first need to provide full permissions for the SQL Server service account to the registry hive (**Registry Editor**).
+> 
+> The **Windows Registry** is a place in the computer where we can make a lot of granular configurations to affect the way the OS behaves.
+
+  </details>
+
+<br>
+
+<br>
+
+First we're going to open the **Registry Editor**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Paste the following Registry path inside it (instead of browsing to it):
+
+```HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Security```
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Then we'll right-click the **Security** key > click on **Permissions**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Add the ```NETWORK SERVICE``` account to the permission > and thick the ☑ boxes **Full Control** and **Read**
+
+Click **"Apply"** and then **"OK"**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+<br>
+
+<h2></h2>
+
+<br>
+
+Now we'll **Enable Auditing from SQL Server**
+
+From the Start menu > type **cmd** > right-click on **Command Prompt** and **Run as administrator**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Paste the following **statement** > press **"Enter"** > and you can see that the command was **successfully executed** ✔️
+
+```auditpol /set /subcategory:"application generated" /success:enable /failure:enable```
+
+<br>
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+<br>
+
+<h2></h2>
+
+<br>
+
+The next thing to do is open the **SSMS**, log into it and **Enable Auditing**.
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+To Connect to the SQL Server ➜  we can select **"SQL Server Authentication"** and use the **SQL Server system administrator credentials** we had set up earlier:
+
+- Username: ```sa```
+- Password: ```Cyberlab123!```
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Then we'll go to the **Properties** of the Server we just connected to > go to **"Login auditing"** > and check ◉ **Both failed and successful logins**
+
+This way all the login attempts can be logged to the **Event Log**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+And finally we just have to **Restart** the Server ➜ right-click on the **windows-VM SQL Server** and click on **"Restart"**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+  </details>
+
+<h2></h2>
+
+<details close> 
+<summary> <h2>6️⃣ Test SQL Logging to make sure it is Working Properly</h2> </summary>
+<br>
+
+We'll now "attempt" to reconnect to the SQL Server **Intentionally Using a Wrong Password**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Then close **SSMS** and open the **Event Viewer**.
+
+Under the **Windows Logs** > **Application Log** ➜ ⚠️ this is where the **SQL Server Login Attempts** are going to be recorded.
+
+You can see bellow the Event of the **Login failed** we intentionally generated using a Wrong Pasword:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+✅ So we can confirm that this is working properly.
+
+<br>
+
+  </details>
+
+<h2></h2>
+
+<details close> 
+<summary> <h2>6️⃣ Test SQL Logging to make sure it is Working Properly</h2> </summary>
+<br>
 
 
 
