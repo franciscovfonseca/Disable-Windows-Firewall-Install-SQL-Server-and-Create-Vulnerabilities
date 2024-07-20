@@ -9,16 +9,16 @@
 <br />
 <br />
 
-In this lab, instead of creating a stand-alone **SQL Server Database**, we're actually going to install it and set it up **inside of the Windows Virtual Machine**.
+In this lab we're going to install and set up a **SQL Server Database** inside of the **Windows Virtual Machine**.
 
 We're also going to **Disable the Windows Internal Firewall**.
 
-Finally we'll **Remote Desktop Protocol** into the **Windows VM** and also **Test Ping and Log into the Linux VM via SSH** to make sure we can get in and everything is working.
+Finally we'll **Remote Desktop Protocol** into the **Linux VM** and also **Test Ping and Log into it via SSH**, to make sure we can get in and everything is working.
 
 <br />
 
 <details close> 
-<summary> <h2> 1️⃣ Remote Into the VM (windows-vm)</h2> </summary>
+<summary> <h2> 1️⃣ RDP Into the VM (windows-vm)</h2> </summary>
 <br>
 
 The first step is to copy the **Public IP Address** of the ```windows-vm```
@@ -71,7 +71,7 @@ Then trun of the **Firewall State** for the **Domain**, **Private** and **Public
 
 <br>
 
-You can **[download SQL Server here](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2019)**
+You can **[Download SQL Server here](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2019)**
 
 Download the EXE file and install it on the VM:
 
@@ -123,44 +123,53 @@ Click on **"Add Current User"** and it will add the current user ```labuser``` a
 <br>
 
 > The next thing we're going to do is install **SQL Server Management Studio**.
-
-> This is just an app that essentially let's us log into **SQL Server** and visualize things.
-
+> 
+> This is just an app that essentially let's us log into **SQL Server Database** and visualize things.
+> 
 > Basically we're going to use SSMS to attempt to log in and **Generate Logs** or **Failure to Authenticate Logs**.
 
 <br>
 
-You can **[Download SSMS here](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms )**
+You can **[Download SSMS here](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)**
 
-
-
-
-
-- Same **Region**, **Resource Group**, and **VNet** as the ```windows-vm``` Virtual Machine
-
-- I named this second **VM** ```linux-vm```
-
-- For the **Image** I selected the ```Ubuntu Server 20.04 LTS```
+Open the **SSMS Setup ENU exe** File, install it and Restart the Vm:
 
   ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
 
-- I used the same **Size**, **Admin Username and Password** as the ones used for the Windows VM
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
 
-- For **Virtual Network**, I made sure I selected the same VNet ```Lab-VNet``` that I had created while setting up the Windows VM.
 
+>   <details close> 
+>   
+> **<summary> 💡 Note</summary>**
+> 
+> Again this is just an App that let's us connect to our SQL Database.
+> 
+> Because our Virtual Machine is completely exposed to the Internet: The NSG is wide open & the local Firewall is wide open 🡆 theoretically anyone could attempt to connect to the SQL Database we just installed.
+> 
+> It doesn't have to be someone on the VM, it can be someone from anywhere worldwide, as long as they can access our VM's IP Address.
+> 
+>   </details>
 
 <br>
 
   </details>
 
 <h2></h2>
-<details close> 
-<summary> <h2>5️⃣ NSG & Inbound Security Rule Configuration</h2> </summary>
+<details close>
+  
+<summary> <h2>5️⃣ Enable logging for SQL Server to be ported into Windows Event Viewer</h2> </summary>
 <br>
 
-> In this step I opened up **Network Security Groups (NSGs)** for both VMs:
+> The next thing we're going to do is **Enable Logging for SQL Server**, in order to send the logs to the **Windows Event Log**.
 > 
-> - Configure the NSGs (Layer 4 Firewalls) to allow **all inbound traffic**.
+> This part is a bit troublesome to do 🡆 there's a few steps we have to do to **Enable Logging for SQL Server**.
+
+<br>
+
+You can **[Follow this Link to Write SQL Server Audit Events to the Security log](https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/write-sql-server-audit-events-to-the-security-log?view=sql-server-ver16)**
+
+
 
 <br>
 
