@@ -9,11 +9,11 @@
 <br />
 <br />
 
-To kick off my **Azure Honeynet project**, we must first set up the **Virtual Machines (VMs)** we'll use.
+In this lab, instead of creating a stand-alone **SQL Server Database**, we're actually going to install it and set it up **inside of the Windows Virtual Machine**.
 
-Virtual machines are like computers in the cloud, and they'll form the foundation of our Honeynet.
+We're also going to **Disable the Windows Internal Firewall**.
 
-Here are the steps we'll take in **Microsoft Azure**:
+Finally we'll **Remote Desktop Protocol** into the **Windows VM** and also **Test Ping and Log into the Linux VM via SSH** to make sure we can get in and everything is working.
 
 <br />
 
