@@ -18,7 +18,7 @@ Finally we'll **Remote Desktop Protocol** into the **Linux VM** and also **Test 
 <br />
 
 <details close> 
-<summary> <h2> 1️⃣ RDP Into the VM (windows-vm)</h2> </summary>
+<summary> <h2> 1️⃣ RDP Into the Windows VM</h2> </summary>
 <br>
 
 The first step is to copy the **Public IP Address** of the ```windows-vm```
@@ -286,7 +286,7 @@ You can see bellow the Event of the **Login failed** we intentionally generated 
 
   ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
 
-✅ So we can confirm that this is working properly.
+✅ We can confirm that this is working properly.
 
 <br>
 
@@ -295,78 +295,106 @@ You can see bellow the Event of the **Login failed** we intentionally generated 
 <h2></h2>
 
 <details close> 
-<summary> <h2>6️⃣ Test SQL Logging to make sure it is Working Properly</h2> </summary>
+<summary> <h2>7️⃣ Test Ping & Logging into the Linux VM via SSH</h2> </summary>
 <br>
 
-
-
-<br>
-
-### Navigate to the Network Security Group (NSG):
-
-- In the Azure portal, search for "**Network Security Groups**" in the search bar at the top.
-- Once there, select the NSG associated with your virtual machine.
-
- ![NSG](https://github.com/user-attachments/assets/f65a25f9-c6a7-461e-8542-3a5a3c84ca38)
-  
-### Create an inbound security rule:
-
-- Inside the NSG, you'll find a section for "**Inbound security rules**".
-- This is where we control what kind of traffic is allowed to reach our VM.
-- Click on "***Add***" to create a "**new rule**".
-
- ![NSG](https://github.com/user-attachments/assets/13424b7c-9402-4ed2-bc14-51e3de7ba08c)
-
-### Configure the rule:
-
-- We'll be prompted to input some details about our new rule.
-  
-### Source:
-
-- This defines where the incoming traffic is coming from.
-  
-  - We can set this to ```Any``` to allow traffic from any location.
-  
-### Source port ranges:
-
-- This specifies the ports on the source (the computer initiating the connection) that are allowed.
-
-  - Again, we can set this to ```*``` or ```Any``` to allow all ports.
-
-### Destination:
-
-- This defines where the traffic is going to.
-
-  - Since we want the traffic to reach our VM, we can set this to ```Any```.
-  
-### Destination port ranges:
-
-- This specifies the ports on our VM that are allowed to receive traffic.
-
-  - We can set this to ```*``` or ```Any``` to open all ports.
-  
-### Priority:
-
-- Setting priorities in Network Security Groups (NSGs) is an essential step.
-- The priority determines the order in which rules are applied.
-- Rules with lower priority numbers are processed before rules with higher priority numbers because the lower the number, the higher the priority.
-
-  - For the purpose of this lab, I set the priority to ```300``` to ensure that this honeypot functions as intended!
-
-### Action:
-
-- We'll set this to ```Allow```, which means that traffic matching this rule will be allowed to reach our VM. 
-  
- ![NSG](https://github.com/franciscovfonseca/Setting-Up-Vulnerable-VMs-in-Azure/assets/172988970/0bf17e13-1f81-42ac-8692-dbf3bbbdf893)
-
-  
-### Review & Create:
-
-- After configuring all the details we need for this inbound rule, click "***Add***" to **Create the Rule**.
+> The next thing we have to do is Ping the Linux Virtual Machine ➜ make sure it is pingable:
+> 
+> We'll log into the Linux VM with Secure Shell (SSH) Protocol
+>
+> <br>
+> 
+>   <details close> 
+>   
+> **<summary> 💡 Note</summary>**
+> 
+> In our case here there's no Linux interface by default ➜ so when we log in to our VM we're just going to use a Command Line Interface.
+> 
+>   </details>
 
 <br>
 
-➡️ I then followed the exact same process for the ```linux-vm``` Virtual Machine
+Back to the Azure Portal, we'll go to the ```linux-vm``` > copy the **Public IP Address**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+- Then if you're running Windows ➜ open **Powershell**-
+- But if you're running Mac ➜ open **Terminal**
+
+We're going to attempt to ping our **Linux VM** > type in the **IP Address**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+✅ We can confirm that we were able to successfully **Ping the Linux VM**:
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+Now to SSH into the Virtual Machine, we have our ```linux-vm``` Username & Password:
+
+- Username: ```labuser```
+- Password: ```Cyberlab123!```
+
+To connect into a machine with SSH we just type:
+
+```commandline
+ssh USERNAME@IPADDRESS
+```
+And then we press "Enter"
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+<br>
+
+>   <details close> 
+>   
+> **<summary> 💡 Note</summary>**
+> 
+> Then it'll ask us if we want to trust the certificate that the Virtual Machine is "offering" to establish the SSH connection:
+> 
+> - So we're just going to say **"Yes"** to it.
+> 
+>   ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+> 
+> Then we'll import the certification into our computer, and our computer will trust it ✔️
+> 
+>   </details>
+
+<br>
+
+Then we'll just have type in our **Password** for SSH to log into the **Linux VM**.
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+You'll see that your prompt changed to **labuser@linux-vm**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+To confirm you´re logged in you can:
+
+- Type ```uname -a``` and it will tell you what Operating System it is running: **Linux**
+- And you can also type ```id``` and it will tell you **labuser**
+
+  ![VM create](https://github.com/user-attachments/assets/fd16cae4-cdfd-45c8-b0a3-d94a04c9677d)
+
+✅ This is how you know you were **Successfully Logged into the Linux VM**.
+
+<br>
+
+ <details close> 
+
+> **<summary> 💡 Note</summary>**
+> 
+> We're not going to be doing much with this Linux VM in this lab ➜ it's just another Endpoint for people to attack
+> 
+> Later we'll intall something in the Linux Machine that will let us forward the Logs into our Log Repository.
+> 
+> But for now I just wanted to make sure it is running ➜ and it is ✔️
+> 
+>  </details>
+
+<br>
 
 <br>
 
