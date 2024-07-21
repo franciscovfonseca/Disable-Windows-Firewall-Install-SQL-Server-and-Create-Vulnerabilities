@@ -397,11 +397,11 @@ To confirm you´re logged in you can:
 > 
 >  </details>
 
-<br>
-
-<br>
-
   </details>
+
+<br>
+
+<br>
 
 <br>
 
