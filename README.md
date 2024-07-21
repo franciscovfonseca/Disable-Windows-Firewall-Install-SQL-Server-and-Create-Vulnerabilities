@@ -11,9 +11,9 @@
 
 In this lab we're going to install and set up a **SQL Server Database** inside of the **Windows Virtual Machine**.
 
-We're also going to **Disable the Windows Internal Firewall**.
+We're also going to **Disable the Windows VM's Internal Firewall**.
 
-Finally we'll **Remote Desktop Protocol** into the **Linux VM** and also **Test Ping and Log into it via SSH**, to make sure we can get in and everything is working.
+Finally we'll **Remote Desktop Protocol** into the **Linux VM** and also **Test Ping and Log into it via SSH**, to make sure we can log in and everything is working.
 
 <br />
 
@@ -420,7 +420,7 @@ In this lab we:
 
 Now we will leave our Virtual Machines ON for the at least 24 hours
 
-➡️ This will give bad actors, bots or attackers a chance to discover that our VMs exist and to attemp to log into them and generate Logs.
+➡️ This will give bad actors, bots or attackers a chance to **Discover our VMs** and **Generate Logs**.
 
  
 <br />
