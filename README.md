@@ -408,17 +408,32 @@ To confirm you´re logged in you can:
 
 <br>
 
-By **Creating our VMs** and **Open Inbound Security Rules**, we're essentially leaving the front door of our VMs wide open.
+In this lab we:
 
-This is generally not something you'd do in a real production environment, as it would make your system extremely vulnerable to attacks.
+- Disabled the **Internal Firewall on the Windows Computer**.
 
-However, in the context of our honeynet, it's exactly what we want to do!
+- Installed the **SQL Server Database into the Windows Computer**.
 
-This allows us to **Attract Potential Attackers** and **Observe their Actions in a Controlled Environment**.
+- Logged into the **Linux Computer with SSH**.
 
-  
 <br />
-<br />
-  
+
+Now we will leave our Virtual Machines ON for the at least 24 hours
+
+➡️ This will give bad actors, bots or attackers a chance to discover that our VMs exists and attemp to log into them and generate Logs.
+
  
+<br />
+
+<br />
+
+<br />  
+
+<br /> 
+
+<br />
+
+<br />  
+
+<br /> 
  
