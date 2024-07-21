@@ -420,7 +420,7 @@ In this lab we:
 
 Now we will leave our Virtual Machines ON for the at least 24 hours
 
-➡️ This will give bad actors, bots or attackers a chance to discover that our VMs exists and attemp to log into them and generate Logs.
+➡️ This will give bad actors, bots or attackers a chance to discover that our VMs exist and to attemp to log into them and generate Logs.
 
  
 <br />
