@@ -136,23 +136,24 @@ After all that > when you reach the **"Ready to Install"** Tab ➜ click **"Inst
 
 You can **[Download SSMS here](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)**
 
-Open the **SSMS Setup ENU exe** File, install it and Restart the Vm:
+Open the **SSMS-Setup-ENU.exe** File from the Downloads > **Install** it > and **Restart the Vm**:
 
-  ![VM create](https://github.com/user-attachments/assets/94201855-f435-4f9d-b72a-f7087b645024)
+  ![VM create](https://github.com/user-attachments/assets/f51b171f-0f49-4808-8fd2-56545cdbe638)
 
   ![VM create](https://github.com/user-attachments/assets/d10649b8-8398-4812-95ca-da4cb2066b68)
 
 
 >   <details close> 
 >   
-> **<summary> 💡 Note</summary>**
+> **<summary> 💡 Summary</summary>**
 > 
-> Again this is just an App that let's us connect to our SQL Database.
+> We're going to use this **SSMS** to **Connect to the SQL Server in our Windows VM**.
 > 
-> Because our Virtual Machine is completely exposed to the Internet: The NSG is wide open & the local Firewall is wide open ➜ theoretically anyone could attempt to connect to the SQL Database we just installed.
+> Once the **Installation is Completed** ➜ we'll take the **Windows VM's Public IP Address** (which is where the **SQL Server** is) ➜ and we're going to **Generate some Logs** by attempting to Log Into it as a bad actor.
 > 
-> It doesn't have to be someone on the VM, it can be someone from anywhere worldwide, as long as they can access our VM's IP Address.
+> And then at the end of this lab we'll log back into the **Windows VM** again and **Inspect the Logs**
 > 
+> We'll also log into the **Linux VM** and **Inspect the Logs** in there as well.
 >   </details>
 
 <br>
