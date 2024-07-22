@@ -130,7 +130,7 @@ After all that > when you reach the **"Ready to Install"** Tab ➜ click **"Inst
 > 
 > This is just an app that essentially let's us log into **SQL Server Database** and visualize things.
 > 
-> Basically we're going to use SSMS to attempt to log in and **Generate Logs** or **Failure to Authenticate Logs**.
+> Basically we're going to use SSMS to attempt to log in and **Generate Logs**.
 
 <br>
 
@@ -141,22 +141,6 @@ Open the **SSMS-Setup-ENU.exe** File from the Downloads > **Install** it > and *
   ![VM create](https://github.com/user-attachments/assets/f51b171f-0f49-4808-8fd2-56545cdbe638)
 
   ![VM create](https://github.com/user-attachments/assets/d10649b8-8398-4812-95ca-da4cb2066b68)
-
-
->   <details close> 
->   
-> **<summary> 💡 Summary</summary>**
-> 
-> We're going to use this **SSMS** to **Connect to the SQL Server in our Windows VM**.
-> 
-> Once the **Installation is Completed** ➜ we'll take the **Windows VM's Public IP Address** (which is where the **SQL Server** is) ➜ and we're going to **Generate some Logs** by attempting to Log Into it as a bad actor.
-> 
-> And then at the end of this lab we'll log back into the **Windows VM** again and **Inspect the Logs**
-> 
-> We'll also log into the **Linux VM** and **Inspect the Logs** in there as well.
->   </details>
-
-<br>
 
   </details>
 
